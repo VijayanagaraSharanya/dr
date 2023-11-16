@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        img {
+            display: block;
+        }
+        body {
+            margin: 0;
+            padding:0 ;
+            background-image: url("static/images/imag2-transformed.png");
+            background-repeat: repeat;
+            background-size: cover;
+            background-position: bottom;
+        }
+        
+        .container {
+            margin-left: 100px;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .form-box {
+            margin-top: 150px;
+            position: relative;
+            width: 400px;
+            height: 550px;
+            border: 2px solid black;
+            border-radius: 20px;
+            display: flex;
+            background-color: #87ceebb3;
+            justify-content: center;
+            align-items: center;
+              
+        }
+        .profile-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            left: calc(50% - 50px);
+        }
+        
+        .form-box h2 {
+            color: black;
+            text-align: center;
+            font-size: 2rem;
+        
+        }
+        
+        .form-box .input-box {
+            position: relative;
+            margin: 30px 0px;
+            width: 310px;
+            /* border-bottom: 2px solid white; */
+        
+        }
+        
+        .form-box .input-box input {
+            width: 100%;
+            height: 45px;
+            border: none;
+            background-color: white;
+            border-radius: 20px;
+            outline: none;
+            padding: 0px 20px 0px 5px;
+            color: black;
+        }
+        
+        i {
+            position: absolute;
+            right: 10px;
+            top: 15px;
+        
+        }
+        
+        input::placeholder{
+            text-align: left;
+            color: black;
+        }
+        
+        .btn {
+            background-color: black;
+            width: 100%;
+            height: 50px;
+            color: white;
+            border-radius: 30px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        
+        }
+        
+        .group {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .group span a {
+            color: black;
+            position: relative;
+            top: 10%;
+            text-decoration: none;
+        }
+        
+        .group a:hover {
+            color: red;
+            text-decoration: underline;
+        }
+        
+        #result {
+            color: red;
+            font-weight: bold;
+            position: relative;
+            top:25px;
+        }
+        
+        .popup {
+            width: 400px;
+            background-color: white;
+            border-radius: 6px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50% ,-50%) scale(0);
+            transition: transform .4s , top .4s;
+            text-align: center;
+            padding: 0px 30px 30px;
+            height: 330px;
+            color: black;
+             
+        }
+        
+        #checkmark {
+            font-size: 50px;
+        }
+        
+        .popup button {
+            width: 100%;
+            background: rgb(29, 168, 39);
+            padding: 10px 0;
+            margin-top: 50px;
+            border: none;
+            outline:none;
+            font-size: 18px;
+            color: black;
+            border-radius: 10px;
+            cursor: pointer;
+        
+        }
+        
+        .popup a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .open-slide {
+            top: 50%;
+            transform: translate(-50%,-50%) scale(1);
+            visibility: visible;
+        }
+    </style>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v18.0" nonce="I19y3SGL"></script>
+    <div class="container">
+        <div class="form-box">
+            <img src="static/images/icons.png" class="profile-logo" alt="">
+            <form action="/afterreg" method="POST" name="Formfill" onsubmit="return validation()">
+                <h2>Register</h2>
+                <p id="result"></p>
+                 <div class="input-box">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" name="username" placeholder="Enter Username...">
+                 </div>
+                <div class="input-box">
+                    <i class='bx bxs-envelope'></i>
+                    <input type="email" name="email" placeholder="Enter Email...">
+                </div>
+                <div class="input-box">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" name="password" placeholder="Enter Password...">
+                </div>
+                <div class="input-box">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" name="cpassword" placeholder="Confirm Password...">
+                </div>
+                <div class="button">
+                    <input type="submit" class="btn" onclick="validation()" value="Sign Up">
+                </div>
+                <div class="group">
+                    <span><a href="ForgotPassword.html">Forgot Password?</a></span>
+                    <span><a href="Login.html">Login</a></span>
+                    <script>
+
+                        function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+                          console.log('statusChangeCallback');
+                          console.log(response);                   // The current login status of the person.
+                          if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+                            testAPI();  
+                          } else {                                 // Not logged into your webpage or we are unable to tell.
+                            document.getElementById('status').innerHTML = 'Please log ' +
+                              'into this webpage.';
+                          }
+                        }
+                      
+                      
+                        function checkLoginState() {               // Called when a person is finished with the Login Button.
+                          FB.getLoginStatus(function(response) {   // See the onlogin handler
+                            statusChangeCallback(response);
+                          });
+                        }
+                      
+                      
+                        window.fbAsyncInit = function() {
+                          FB.init({
+                            appId      : '881280733615052',
+                            cookie     : true,                     // Enable cookies to allow the server to access the session.
+                            xfbml      : true,                     // Parse social plugins on this webpage.
+                            version    : 'v18.0'           // Use this Graph API version for this call.
+                          });
+                      
+                      
+                          FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+                            statusChangeCallback(response);        // Returns the login status.
+                          });
+                        };
+                       
+                        function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+                          console.log('Welcome!  Fetching your information.... ');
+                          FB.api('/me', function(response) {
+                            console.log('Successful login for: ' + response.name);
+                            document.getElementById('status').innerHTML =
+                              'Thanks for logging in, ' + response.name + '!';
+                          });
+                        }
+                      
+                      </script>
+                      
+                      
+                      <!-- The JS SDK Login Button -->
+                      
+                      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                      </fb:login-button>
+                      
+
+                   
+                
+                </div>
+            </form>
+        </div>
+        <div class="popup" id="popup">
+            <h2>Thank You</h2>
+            <p>You are Registered Successfully!!</p>
+            <p>Thanks for Registering!!</p>
+            <a href="Login.html"><button onclick="close()">OK</button></a>
+            
+</div>
+        </div>
+    </div>
+</body>
+<script src="templates/js/Signup.js"></script>
+
+</html>
